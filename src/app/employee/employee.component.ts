@@ -30,4 +30,55 @@ export class EmployeeComponent {
       }
     );
   }
+  
+saveClick()
+{
+  //alert(this.newEmployee.name)
+  this.employeeService.saveEmployee(this.newEmployee).subscribe(
+    (response)=>{
+      alert('Data Saved!!!')
+      this.getAll();
+      this.clear_Rec();
+    },
+    (error)=>{
+      console.log(error);
+    }
+  );
 }
+clear_Rec(){
+  this.newEmployee.name="";
+  this.newEmployee.address="";
+  this.newEmployee.salary = 0;
+}
+editClick(d:any)
+{
+  //alert(d.name)
+  this.editEmployee=d;
+}
+updateClick()
+{
+  this.employeeService.updateEmployee(this.editEmployee).subscribe(
+    (response)=>{
+      alert('Data Updated!!')
+      this.getAll();
+    },
+    (error)=>{
+      console.log(error)
+    }
+  );
+}
+deleteClick(id:number){
+  let ans = window.confirm('Want To Delete ?');
+  if(!ans) return;
+  this.employeeService.deleteEmployee(id).subscribe(
+    (response)=>{
+      alert('Data deleted!!!')
+      this.getAll();
+    },
+    (error)=>{
+      console.log(error);
+    }
+  )
+}
+}
+
